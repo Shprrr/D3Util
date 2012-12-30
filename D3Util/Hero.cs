@@ -170,7 +170,7 @@ namespace D3Util
 			//  +IF(BarbarianWeaponMasterPolearmSpear){0.1}else{0})
 			// +IF(MonkMantraOfRetributionTransgression){0.08}else{0})
 			statsUnbuffed.attackSpeed = 0;
-			if (items[Slot.OffHand].attacksPerSecond != null)
+			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
 			{
 				statsUnbuffed.attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + attackSpeedAvg);
 			}
@@ -304,7 +304,7 @@ namespace D3Util
 		public double DpsUnbuffedAdd(double damageAvg = 0, int primaryStat = 0, double attackSpeedAvg = 0, double critChance = 0, double critDamage = 0)
 		{
 			double attackSpeed = 0;
-			if (items[Slot.OffHand].attacksPerSecond != null)
+			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
 			{
 				attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + this.attackSpeedAvg + attackSpeedAvg);
 			}
