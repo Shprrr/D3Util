@@ -42,13 +42,19 @@
 			this.lblItemLevel = new System.Windows.Forms.Label();
 			this.lblRequiredLevelText = new System.Windows.Forms.Label();
 			this.lblRequiredLevel = new System.Windows.Forms.Label();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.lblDpsText = new System.Windows.Forms.Label();
+			this.lblDps = new System.Windows.Forms.Label();
+			this.lblEhpText = new System.Windows.Forms.Label();
+			this.lblEhp = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblName
 			// 
-			this.lblName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			   | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblName.AutoEllipsis = true;
 			this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblName.Location = new System.Drawing.Point(3, 0);
@@ -136,21 +142,21 @@
 			// 
 			// flpMagicAttribute
 			// 
-			this.flpMagicAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.flpMagicAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			   | System.Windows.Forms.AnchorStyles.Left)
+			   | System.Windows.Forms.AnchorStyles.Right)));
 			this.flpMagicAttribute.AutoScroll = true;
 			this.flpMagicAttribute.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flpMagicAttribute.Location = new System.Drawing.Point(3, 193);
 			this.flpMagicAttribute.Name = "flpMagicAttribute";
-			this.flpMagicAttribute.Size = new System.Drawing.Size(396, 71);
+			this.flpMagicAttribute.Size = new System.Drawing.Size(396, 152);
 			this.flpMagicAttribute.TabIndex = 28;
 			// 
 			// lblItemLevelText
 			// 
 			this.lblItemLevelText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblItemLevelText.AutoSize = true;
-			this.lblItemLevelText.Location = new System.Drawing.Point(3, 267);
+			this.lblItemLevelText.Location = new System.Drawing.Point(3, 409);
 			this.lblItemLevelText.Name = "lblItemLevelText";
 			this.lblItemLevelText.Size = new System.Drawing.Size(59, 13);
 			this.lblItemLevelText.TabIndex = 29;
@@ -160,7 +166,7 @@
 			// 
 			this.lblItemLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblItemLevel.AutoSize = true;
-			this.lblItemLevel.Location = new System.Drawing.Point(68, 267);
+			this.lblItemLevel.Location = new System.Drawing.Point(68, 409);
 			this.lblItemLevel.Name = "lblItemLevel";
 			this.lblItemLevel.Size = new System.Drawing.Size(19, 13);
 			this.lblItemLevel.TabIndex = 30;
@@ -170,7 +176,7 @@
 			// 
 			this.lblRequiredLevelText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblRequiredLevelText.AutoSize = true;
-			this.lblRequiredLevelText.Location = new System.Drawing.Point(292, 267);
+			this.lblRequiredLevelText.Location = new System.Drawing.Point(292, 409);
 			this.lblRequiredLevelText.Name = "lblRequiredLevelText";
 			this.lblRequiredLevelText.Size = new System.Drawing.Size(82, 13);
 			this.lblRequiredLevelText.TabIndex = 29;
@@ -180,16 +186,68 @@
 			// 
 			this.lblRequiredLevel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblRequiredLevel.AutoSize = true;
-			this.lblRequiredLevel.Location = new System.Drawing.Point(380, 267);
+			this.lblRequiredLevel.Location = new System.Drawing.Point(380, 409);
 			this.lblRequiredLevel.Name = "lblRequiredLevel";
 			this.lblRequiredLevel.Size = new System.Drawing.Size(19, 13);
 			this.lblRequiredLevel.TabIndex = 30;
 			this.lblRequiredLevel.Text = "99";
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			   | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox1.Controls.Add(this.lblEhpText);
+			this.groupBox1.Controls.Add(this.lblEhp);
+			this.groupBox1.Controls.Add(this.lblDps);
+			this.groupBox1.Controls.Add(this.lblDpsText);
+			this.groupBox1.Location = new System.Drawing.Point(3, 351);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(396, 53);
+			this.groupBox1.TabIndex = 31;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Difference";
+			// 
+			// lblDpsText
+			// 
+			this.lblDpsText.AutoSize = true;
+			this.lblDpsText.Location = new System.Drawing.Point(6, 16);
+			this.lblDpsText.Name = "lblDpsText";
+			this.lblDpsText.Size = new System.Drawing.Size(32, 13);
+			this.lblDpsText.TabIndex = 0;
+			this.lblDpsText.Text = "DPS:";
+			// 
+			// lblDps
+			// 
+			this.lblDps.AutoSize = true;
+			this.lblDps.Location = new System.Drawing.Point(44, 16);
+			this.lblDps.Name = "lblDps";
+			this.lblDps.Size = new System.Drawing.Size(35, 13);
+			this.lblDps.TabIndex = 1;
+			this.lblDps.Text = "[DPS]";
+			// 
+			// lblEhpText
+			// 
+			this.lblEhpText.AutoSize = true;
+			this.lblEhpText.Location = new System.Drawing.Point(6, 29);
+			this.lblEhpText.Name = "lblEhpText";
+			this.lblEhpText.Size = new System.Drawing.Size(32, 13);
+			this.lblEhpText.TabIndex = 2;
+			this.lblEhpText.Text = "EHP:";
+			// 
+			// lblEhp
+			// 
+			this.lblEhp.AutoSize = true;
+			this.lblEhp.Location = new System.Drawing.Point(44, 29);
+			this.lblEhp.Name = "lblEhp";
+			this.lblEhp.Size = new System.Drawing.Size(35, 13);
+			this.lblEhp.TabIndex = 1;
+			this.lblEhp.Text = "[EHP]";
+			// 
 			// ucItemTooltip
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.lblRequiredLevel);
 			this.Controls.Add(this.lblRequiredLevelText);
 			this.Controls.Add(this.lblItemLevel);
@@ -206,8 +264,10 @@
 			this.Controls.Add(this.lblName);
 			this.DoubleBuffered = true;
 			this.Name = "ucItemTooltip";
-			this.Size = new System.Drawing.Size(402, 280);
+			this.Size = new System.Drawing.Size(402, 422);
 			((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -229,5 +289,10 @@
 		private System.Windows.Forms.Label lblItemLevel;
 		private System.Windows.Forms.Label lblRequiredLevelText;
 		private System.Windows.Forms.Label lblRequiredLevel;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label lblDpsText;
+		private System.Windows.Forms.Label lblEhpText;
+		private System.Windows.Forms.Label lblEhp;
+		private System.Windows.Forms.Label lblDps;
 	}
 }

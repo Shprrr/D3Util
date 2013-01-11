@@ -94,6 +94,9 @@ namespace D3Util
 					}
 			}
 
+			lblDps.Text = "0";
+			lblEhp.Text = "0";
+
 			lblItemLevel.Text = Item != null ? Item.itemLevel.ToString() : string.Empty;
 			lblRequiredLevel.Text = Item != null ? Item.requiredLevel.ToString() : string.Empty;
 		}
