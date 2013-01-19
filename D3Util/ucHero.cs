@@ -21,6 +21,12 @@ namespace D3Util
 
 			hero = new Hero(heroRoot);
 
+			// Hide these label because it's not calculated.
+			label30.Visible = false;
+			lblEffectiveHp.Visible = false;
+			label31.Location = label30.Location;
+			lblEffectiveHpUnbuffed.Location = lblEffectiveHp.Location;
+
 			lblHeroName.Text = heroRoot.name;
 			ShowHeroStats();
 			ShowItem();
@@ -126,13 +132,12 @@ namespace D3Util
 			lblDpsCritChance.Text = "+" + (hero.DpsUnbuffedAdd(critChance: 0.01) - hero.statsUnbuffed.dps).ToString("N2");
 			lblDpsCritDamage.Text = "+" + (hero.DpsUnbuffedAdd(critDamage: 0.01) - hero.statsUnbuffed.dps).ToString("N2");
 
-			lblEhpVitality.Text = "+" + (hero.EhpUnbuffedAdd(vitality: 1) - hero.statsUnbuffed.effectiveHp).ToString("N2");
-			lblEhpLifePourcent.Text = "+" + (hero.EhpUnbuffedAdd(lifePourcent: 0.01) - hero.statsUnbuffed.effectiveHp).ToString("N2");
-			lblEhpArmor.Text = "+" + (hero.EhpUnbuffedAdd(armor: 10) - hero.statsUnbuffed.effectiveHp).ToString("N2");
-			lblEhpStrength.Text = "+" + (hero.EhpUnbuffedAdd(strength: 1) - hero.statsUnbuffed.effectiveHp).ToString("N2");
-			lblEhpResist.Text = "+" + (hero.EhpUnbuffedAdd(resist: 1) - hero.statsUnbuffed.effectiveHp).ToString("N2");
-			lblEhpIntelligence.Text = "+" + ((hero.EhpUnbuffedAdd(intelligence: 10) - hero.statsUnbuffed.effectiveHp) / 10).ToString("N2");
-			lblEhpHp.Text = ((double)hero.statsUnbuffed.effectiveHp / hero.statsUnbuffed.life).ToString("N2") + " EHP";
+			lblEhpVitality.Text = "+" + (hero.EhpUnbuffedAdd(vitality: 1) - hero.statsUnbuffed.effectiveHp).ToString("N0");
+			lblEhpLifePourcent.Text = "+" + (hero.EhpUnbuffedAdd(lifePourcent: 0.01) - hero.statsUnbuffed.effectiveHp).ToString("N0");
+			lblEhpArmor.Text = "+" + (hero.EhpUnbuffedAdd(armor: 10) - hero.statsUnbuffed.effectiveHp).ToString("N0");
+			lblEhpResistAll.Text = "+" + (hero.EhpUnbuffedAdd(resist: 1) - hero.statsUnbuffed.effectiveHp).ToString("N0");
+			lblEhpIntelligence.Text = "+" + ((hero.EhpUnbuffedAdd(intelligence: 10) - hero.statsUnbuffed.effectiveHp) / 10).ToString("N0");
+			lblEhpHp.Text = ((double)hero.statsUnbuffed.effectiveHp / hero.statsUnbuffed.life).ToString("N0") + " EHP";
 		}
 
 		private void ShowItem()

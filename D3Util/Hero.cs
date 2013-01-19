@@ -363,7 +363,7 @@ namespace D3Util
 			return dps;
 		}
 
-		public double EhpUnbuffedAdd(int vitality = 0, double lifePourcent = 0, int armor = 0, int strength = 0, int resist = 0, int intelligence = 0)
+		public double EhpUnbuffedAdd(int vitality = 0, double lifePourcent = 0, int armor = 0, int resist = 0, int intelligence = 0)
 		{
 			int life = 0;
 			if (HeroLevel < 35)
@@ -373,7 +373,7 @@ namespace D3Util
 			double lifePourcentTemp = this.lifePourcent + lifePourcent;
 			life = (int)(life * (1 + lifePourcentTemp));
 
-			int armorTemp = stats.armor + armor + strength;
+			int armorTemp = stats.armor + armor;
 			double damageReduction = Math.Round((double)armorTemp / (50 * MonsterLevel + armorTemp), 4, MidpointRounding.AwayFromZero);
 
 			int physicalResist = (statsUnbuffed.intelligence + intelligence) / 10 + resistAll + resistPhysical + resist;

@@ -37,9 +37,7 @@
 			this.label42 = new System.Windows.Forms.Label();
 			this.lblEhpIntelligence = new System.Windows.Forms.Label();
 			this.label41 = new System.Windows.Forms.Label();
-			this.lblEhpResist = new System.Windows.Forms.Label();
-			this.label40 = new System.Windows.Forms.Label();
-			this.lblEhpStrength = new System.Windows.Forms.Label();
+			this.lblEhpResistAll = new System.Windows.Forms.Label();
 			this.label39 = new System.Windows.Forms.Label();
 			this.lblEhpArmor = new System.Windows.Forms.Label();
 			this.label38 = new System.Windows.Forms.Label();
@@ -275,18 +273,16 @@
 			this.groupBox4.Controls.Add(this.label42);
 			this.groupBox4.Controls.Add(this.lblEhpIntelligence);
 			this.groupBox4.Controls.Add(this.label41);
-			this.groupBox4.Controls.Add(this.lblEhpResist);
-			this.groupBox4.Controls.Add(this.label40);
-			this.groupBox4.Controls.Add(this.lblEhpStrength);
+			this.groupBox4.Controls.Add(this.lblEhpResistAll);
 			this.groupBox4.Controls.Add(this.label39);
 			this.groupBox4.Controls.Add(this.lblEhpArmor);
 			this.groupBox4.Controls.Add(this.label38);
 			this.groupBox4.Controls.Add(this.lblEhpLifePourcent);
 			this.groupBox4.Controls.Add(this.label37);
 			this.groupBox4.Controls.Add(this.lblEhpVitality);
-			this.groupBox4.Location = new System.Drawing.Point(6, 542);
+			this.groupBox4.Location = new System.Drawing.Point(6, 555);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(266, 114);
+			this.groupBox4.Size = new System.Drawing.Size(266, 101);
 			this.groupBox4.TabIndex = 23;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Attributes Effect (EHP Unbuffed)";
@@ -294,7 +290,7 @@
 			// label43
 			// 
 			this.label43.AutoSize = true;
-			this.label43.Location = new System.Drawing.Point(6, 94);
+			this.label43.Location = new System.Drawing.Point(6, 81);
 			this.label43.Name = "label43";
 			this.label43.Size = new System.Drawing.Size(40, 13);
 			this.label43.TabIndex = 7;
@@ -303,7 +299,7 @@
 			// lblEhpHp
 			// 
 			this.lblEhpHp.AutoSize = true;
-			this.lblEhpHp.Location = new System.Drawing.Point(129, 94);
+			this.lblEhpHp.Location = new System.Drawing.Point(129, 81);
 			this.lblEhpHp.Name = "lblEhpHp";
 			this.lblEhpHp.Size = new System.Drawing.Size(50, 13);
 			this.lblEhpHp.TabIndex = 7;
@@ -312,7 +308,7 @@
 			// label42
 			// 
 			this.label42.AutoSize = true;
-			this.label42.Location = new System.Drawing.Point(6, 81);
+			this.label42.Location = new System.Drawing.Point(6, 68);
 			this.label42.Name = "label42";
 			this.label42.Size = new System.Drawing.Size(85, 13);
 			this.label42.TabIndex = 7;
@@ -321,7 +317,7 @@
 			// lblEhpIntelligence
 			// 
 			this.lblEhpIntelligence.AutoSize = true;
-			this.lblEhpIntelligence.Location = new System.Drawing.Point(129, 81);
+			this.lblEhpIntelligence.Location = new System.Drawing.Point(129, 68);
 			this.lblEhpIntelligence.Name = "lblEhpIntelligence";
 			this.lblEhpIntelligence.Size = new System.Drawing.Size(89, 13);
 			this.lblEhpIntelligence.TabIndex = 7;
@@ -330,47 +326,29 @@
 			// label41
 			// 
 			this.label41.AutoSize = true;
-			this.label41.Location = new System.Drawing.Point(6, 68);
+			this.label41.Location = new System.Drawing.Point(6, 55);
 			this.label41.Name = "label41";
-			this.label41.Size = new System.Drawing.Size(60, 13);
+			this.label41.Size = new System.Drawing.Size(74, 13);
 			this.label41.TabIndex = 7;
-			this.label41.Text = "+1 Resist =";
+			this.label41.Text = "+1 Resist All =";
 			// 
-			// lblEhpResist
+			// lblEhpResistAll
 			// 
-			this.lblEhpResist.AutoSize = true;
-			this.lblEhpResist.Location = new System.Drawing.Point(129, 68);
-			this.lblEhpResist.Name = "lblEhpResist";
-			this.lblEhpResist.Size = new System.Drawing.Size(64, 13);
-			this.lblEhpResist.TabIndex = 7;
-			this.lblEhpResist.Text = "[EHPResist]";
-			// 
-			// label40
-			// 
-			this.label40.AutoSize = true;
-			this.label40.Location = new System.Drawing.Point(6, 55);
-			this.label40.Name = "label40";
-			this.label40.Size = new System.Drawing.Size(71, 13);
-			this.label40.TabIndex = 7;
-			this.label40.Text = "+1 Strength =";
-			// 
-			// lblEhpStrength
-			// 
-			this.lblEhpStrength.AutoSize = true;
-			this.lblEhpStrength.Location = new System.Drawing.Point(129, 55);
-			this.lblEhpStrength.Name = "lblEhpStrength";
-			this.lblEhpStrength.Size = new System.Drawing.Size(75, 13);
-			this.lblEhpStrength.TabIndex = 7;
-			this.lblEhpStrength.Text = "[EHPStrength]";
+			this.lblEhpResistAll.AutoSize = true;
+			this.lblEhpResistAll.Location = new System.Drawing.Point(129, 55);
+			this.lblEhpResistAll.Name = "lblEhpResistAll";
+			this.lblEhpResistAll.Size = new System.Drawing.Size(75, 13);
+			this.lblEhpResistAll.TabIndex = 7;
+			this.lblEhpResistAll.Text = "[EHPResistAll]";
 			// 
 			// label39
 			// 
 			this.label39.AutoSize = true;
 			this.label39.Location = new System.Drawing.Point(6, 42);
 			this.label39.Name = "label39";
-			this.label39.Size = new System.Drawing.Size(64, 13);
+			this.label39.Size = new System.Drawing.Size(119, 13);
 			this.label39.TabIndex = 7;
-			this.label39.Text = "+10 Armor =";
+			this.label39.Text = "+10 Armor or Strength =";
 			// 
 			// lblEhpArmor
 			// 
@@ -429,7 +407,7 @@
 			this.groupBox3.Controls.Add(this.lblDpsPrimaryStat);
 			this.groupBox3.Controls.Add(this.label32);
 			this.groupBox3.Controls.Add(this.lblDpsAverageDamage);
-			this.groupBox3.Location = new System.Drawing.Point(6, 448);
+			this.groupBox3.Location = new System.Drawing.Point(6, 461);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(266, 88);
 			this.groupBox3.TabIndex = 23;
@@ -1394,9 +1372,7 @@
 		private System.Windows.Forms.Label lblDpsPrimaryStat;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label label41;
-		private System.Windows.Forms.Label lblEhpResist;
-		private System.Windows.Forms.Label label40;
-		private System.Windows.Forms.Label lblEhpStrength;
+		private System.Windows.Forms.Label lblEhpResistAll;
 		private System.Windows.Forms.Label label39;
 		private System.Windows.Forms.Label lblEhpArmor;
 		private System.Windows.Forms.Label label38;
