@@ -137,7 +137,7 @@ namespace D3Util
 			lblEhpArmor.Text = "+" + (hero.EhpUnbuffedAdd(armor: 10) - hero.statsUnbuffed.effectiveHp).ToString("N0");
 			lblEhpResistAll.Text = "+" + (hero.EhpUnbuffedAdd(resist: 1) - hero.statsUnbuffed.effectiveHp).ToString("N0");
 			lblEhpIntelligence.Text = "+" + ((hero.EhpUnbuffedAdd(intelligence: 10) - hero.statsUnbuffed.effectiveHp) / 10).ToString("N0");
-			lblEhpHp.Text = ((double)hero.statsUnbuffed.effectiveHp / hero.statsUnbuffed.life).ToString("N0") + " EHP";
+			lblEhpHp.Text = ((double)hero.statsUnbuffed.effectiveHp / hero.statsUnbuffed.life).ToString("N2") + " EHP";
 		}
 
 		private void ShowItem()
