@@ -8,12 +8,12 @@ namespace D3Util
 {
 	public partial class ucItemTooltip : UserControl
 	{
-		private ItemRoot _Item;
+		private Item _Item;
 
 		/// <summary>
 		/// Item to show in the tooltip
 		/// </summary>
-		public ItemRoot Item
+		public Item Item
 		{
 			get { return _Item; }
 			set
@@ -94,8 +94,8 @@ namespace D3Util
 					}
 			}
 
-			lblDps.Text = "0";
-			lblEhp.Text = "0";
+			lblDps.Text = Item != null ? Item.DpsDifference.ToString("N2") : string.Empty;
+			lblEhp.Text = Item != null ? Item.EhpDifference.ToString("N0") : string.Empty;
 
 			lblItemLevel.Text = Item != null ? Item.itemLevel.ToString() : string.Empty;
 			lblRequiredLevel.Text = Item != null ? Item.requiredLevel.ToString() : string.Empty;

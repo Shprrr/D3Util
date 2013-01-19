@@ -127,7 +127,7 @@ namespace D3Util
 		public int secondaryResource { get; set; }
 	}
 
-	public class Item
+	public class JsonItem
 	{
 		public string id { get; set; }
 		public string name { get; set; }
@@ -145,31 +145,31 @@ namespace D3Util
 		}
 	}
 
-	public class Head : Item { }
+	public class Head : JsonItem { }
 
-	public class Torso : Item { }
+	public class Torso : JsonItem { }
 
-	public class Feet : Item { }
+	public class Feet : JsonItem { }
 
-	public class Hands : Item { }
+	public class Hands : JsonItem { }
 
-	public class Shoulders : Item { }
+	public class Shoulders : JsonItem { }
 
-	public class Legs : Item { }
+	public class Legs : JsonItem { }
 
-	public class Bracers : Item { }
+	public class Bracers : JsonItem { }
 
-	public class MainHand : Item { }
+	public class MainHand : JsonItem { }
 
-	public class OffHand : Item { }
+	public class OffHand : JsonItem { }
 
-	public class Waist : Item { }
+	public class Waist : JsonItem { }
 
-	public class Ring : Item { }
+	public class Ring : JsonItem { }
 
-	public class Neck : Item { }
+	public class Neck : JsonItem { }
 
-	public class Special : Item { }
+	public class Special : JsonItem { }
 
 	public class Items
 	{

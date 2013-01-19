@@ -75,6 +75,7 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Hero.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="JsonHero.cs" />
     <Compile Include="JsonItem.cs" />
     <Compile Include="JsonProfile.cs" />

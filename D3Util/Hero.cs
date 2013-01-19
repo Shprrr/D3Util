@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization.Json;
 
 namespace D3Util
@@ -61,18 +62,22 @@ namespace D3Util
 			Neck
 		}
 
+		private string @class;
 		private double weaponDamageAvgTot = 0, weaponSpeed = 0, damageAvg = 0, attackSpeedAvg = 0, critChance = 0.05, critDamage = 0.5;
 		public int weaponNumber = 0;
 		private int resistAll = 0, resistPhysical = 0, resistFire = 0, resistCold = 0, resistLightning = 0, resistPoison = 0, resistArcane = 0;
 		private double resistAvg = 0, damageReductionResist = 0;
 		private double lifePourcent = 0;
 
+		private int paragonLevel = 0;
+		private int strength = 0, dexterity = 0, intelligence = 0, vitality = 0;
+
 		public int HeroLevel { get; set; }
 		public int MonsterLevel { get; set; }
 		public Stats stats { get; set; }
 		public Stats statsUnbuffed { get; set; }
-		private Dictionary<Slot, ItemRoot> _items = new Dictionary<Slot, ItemRoot>();
-		public Dictionary<Slot, ItemRoot> items { get { return _items; } }
+		private Dictionary<Slot, Item> _items = new Dictionary<Slot, Item>();
+		public Dictionary<Slot, Item> items { get { return _items; } }
 
 		public Hero(HeroRoot heroRoot)
 		{
@@ -83,7 +88,9 @@ namespace D3Util
 			//TODO: Gets all value needed from skills
 
 			HeroLevel = heroRoot.level;
+			paragonLevel = heroRoot.paragonLevel;
 			MonsterLevel = heroRoot.level;
+			@class = heroRoot.@class;
 
 			stats = new Stats();
 
@@ -200,41 +207,55 @@ namespace D3Util
 			statsUnbuffed.effectiveHp = (int)(statsUnbuffed.life / ((1 - statsUnbuffed.damageReduction) * (1 - damageReductionResist)));
 			//EHP: = Life * ((1 + Armor / (50 * Monster Level)) * (1 + Resistance / (5 * Monster Level)))
 			//statsUnbuffed.effectiveHp = (int)(statsUnbuffed.life * ((1 + (double)statsUnbuffed.armor / (50 * MonsterLevel)) * (1 + resistAvg / (5 * MonsterLevel))));
+
+			for (int i = 0; i < items.Count; i++)
+			{
+				var item = items.ElementAt(i);
+				item.Value.CalculDifference(this, item.Key);
+			}
 		}
 
 		protected void InitItems(HeroRoot heroRoot)
 		{
 			DataContractJsonSerializer itemSerializer = new DataContractJsonSerializer(typeof(ItemRoot));
 			if (heroRoot.items.head != null)
-				_items.Add(Slot.Head, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.head.tooltipParams)));
+				items.Add(Slot.Head, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.head.tooltipParams))));
 			if (heroRoot.items.torso != null)
-				_items.Add(Slot.Torso, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.torso.tooltipParams)));
+				items.Add(Slot.Torso, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.torso.tooltipParams))));
 			if (heroRoot.items.feet != null)
-				_items.Add(Slot.Feet, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.feet.tooltipParams)));
+				items.Add(Slot.Feet, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.feet.tooltipParams))));
 			if (heroRoot.items.hands != null)
-				_items.Add(Slot.Hands, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.hands.tooltipParams)));
+				items.Add(Slot.Hands, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.hands.tooltipParams))));
 			if (heroRoot.items.shoulders != null)
-				_items.Add(Slot.Shoulders, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.shoulders.tooltipParams)));
+				items.Add(Slot.Shoulders, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.shoulders.tooltipParams))));
 			if (heroRoot.items.legs != null)
-				_items.Add(Slot.Legs, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.legs.tooltipParams)));
+				items.Add(Slot.Legs, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.legs.tooltipParams))));
 			if (heroRoot.items.bracers != null)
-				_items.Add(Slot.Bracers, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.bracers.tooltipParams)));
+				items.Add(Slot.Bracers, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.bracers.tooltipParams))));
 			if (heroRoot.items.mainHand != null)
-				_items.Add(Slot.MainHand, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.mainHand.tooltipParams)));
+				items.Add(Slot.MainHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.mainHand.tooltipParams))));
 			if (heroRoot.items.offHand != null)
-				_items.Add(Slot.OffHand, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.offHand.tooltipParams)));
+				items.Add(Slot.OffHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.offHand.tooltipParams))));
 			if (heroRoot.items.waist != null)
-				_items.Add(Slot.Waist, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.waist.tooltipParams)));
+				items.Add(Slot.Waist, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.waist.tooltipParams))));
 			if (heroRoot.items.leftFinger != null)
-				_items.Add(Slot.LeftFinger, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.leftFinger.tooltipParams)));
+				items.Add(Slot.LeftFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.leftFinger.tooltipParams))));
 			if (heroRoot.items.rightFinger != null)
-				_items.Add(Slot.RightFinger, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.rightFinger.tooltipParams)));
+				items.Add(Slot.RightFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.rightFinger.tooltipParams))));
 			if (heroRoot.items.neck != null)
-				_items.Add(Slot.Neck, (ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.neck.tooltipParams)));
+				items.Add(Slot.Neck, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.neck.tooltipParams))));
 		}
 
 		protected void SetItemsValues()
 		{
+			weaponDamageAvgTot = 0; weaponSpeed = 0; damageAvg = 0; attackSpeedAvg = 0; critChance = 0.05; critDamage = 0.5;
+			weaponNumber = 0;
+			resistAll = 0; resistPhysical = 0; resistFire = 0; resistCold = 0; resistLightning = 0; resistPoison = 0; resistArcane = 0;
+			resistAvg = 0; damageReductionResist = 0;
+			lifePourcent = 0;
+
+			strength = 0; dexterity = 0; intelligence = 0; vitality = 0;
+
 			foreach (var item in items.Values)
 			{
 				if (item.damage != null)
@@ -262,6 +283,21 @@ namespace D3Util
 				if (item.attributesRaw.Crit_Damage_Percent != null)
 					critDamage += item.attributesRaw.Crit_Damage_Percent.average;
 
+				if (item.attributesRaw.Strength_Item != null)
+					strength += (int)item.attributesRaw.Strength_Item.average;
+
+				if (item.attributesRaw.Dexterity_Item != null)
+					dexterity += (int)item.attributesRaw.Dexterity_Item.average;
+
+				if (item.attributesRaw.Intelligence_Item != null)
+					intelligence += (int)item.attributesRaw.Intelligence_Item.average;
+
+				if (item.attributesRaw.Vitality_Item != null)
+					vitality += (int)item.attributesRaw.Vitality_Item.average;
+
+				if (item.attributesRaw.Hitpoints_Max_Percent_Bonus_Item != null)
+					lifePourcent += item.attributesRaw.Hitpoints_Max_Percent_Bonus_Item.average;
+
 				if (item.attributesRaw.Resistance_All != null)
 					resistAll += (int)item.attributesRaw.Resistance_All.average;
 
@@ -283,9 +319,6 @@ namespace D3Util
 				if (item.attributesRaw.Resistance_Arcane != null)
 					resistArcane += (int)item.attributesRaw.Resistance_Arcane.average;
 
-				if (item.attributesRaw.Hitpoints_Max_Percent_Bonus_Item != null)
-					lifePourcent += item.attributesRaw.Hitpoints_Max_Percent_Bonus_Item.average;
-
 				foreach (var gem in item.gems)
 				{
 					if (gem.attributesRaw.Crit_Damage_Percent != null)
@@ -293,6 +326,18 @@ namespace D3Util
 
 					if (gem.attributesRaw.Hitpoints_Max_Percent_Bonus_Item != null)
 						lifePourcent += gem.attributesRaw.Hitpoints_Max_Percent_Bonus_Item.average;
+
+					if (gem.attributesRaw.Strength_Item != null)
+						strength += (int)gem.attributesRaw.Strength_Item.average;
+
+					if (gem.attributesRaw.Dexterity_Item != null)
+						dexterity += (int)gem.attributesRaw.Dexterity_Item.average;
+
+					if (gem.attributesRaw.Intelligence_Item != null)
+						intelligence += (int)gem.attributesRaw.Intelligence_Item.average;
+
+					if (gem.attributesRaw.Vitality_Item != null)
+						vitality += (int)gem.attributesRaw.Vitality_Item.average;
 				}
 			}
 
@@ -342,6 +387,99 @@ namespace D3Util
 
 			double ehp = (int)(life / ((1 - damageReduction) * (1 - damageReductionResist)));
 			return ehp;
+		}
+
+		public Stats CalculStatsWithout(Slot slot)
+		{
+			Item item = items[slot];
+			items.Remove(slot);
+			SetItemsValues();
+
+			Stats statsWithout = new Stats();
+
+			statsWithout.strength = (HeroLevel + paragonLevel) * (@class == "barbarian" ? 3 : 1) + strength + 7;
+			statsWithout.dexterity = (HeroLevel + paragonLevel) * (@class == "demon-hunter" || @class == "monk" ? 3 : 1) + dexterity + 7;
+			statsWithout.intelligence = (HeroLevel + paragonLevel) * (@class == "witch-doctor" || @class == "wizard" ? 3 : 1) + intelligence + 7;
+			statsWithout.vitality = (HeroLevel + paragonLevel) * 2 + vitality + 7;
+
+			switch (@class)
+			{
+				case "barbarian":
+					statsWithout.primaryStat = statsWithout.strength;
+					break;
+
+				case "demon-hunter":
+				case "monk":
+					statsWithout.primaryStat = statsWithout.dexterity;
+					break;
+
+				case "witch-doctor":
+				case "wizard":
+					statsWithout.primaryStat = statsWithout.intelligence;
+					break;
+			}
+
+			//Life when player level < 35: = 36 + 4 × Level + 10 × Vitality
+			//Life when player level ≥ 35: = 36 + 4 × Level + (Level - 25) × Vitality
+			if (HeroLevel < 35)
+				statsWithout.life = 36 + 4 * HeroLevel + 10 * statsWithout.vitality;
+			else
+				statsWithout.life = 36 + 4 * HeroLevel + (HeroLevel - 25) * statsWithout.vitality;
+			statsWithout.lifePourcent = lifePourcent;
+			statsWithout.life = (int)(statsWithout.life * (1 + statsWithout.lifePourcent));
+
+			//=IF((B74>0);(((B71+B74)/2)*(1,15+B86));(B71*(1+B86)))+((+IF((U9="Yes");0,03;0)+IF(((U23="Yes")*(U3="B"));0,1;0))+IF(((U16="Yes")*(U3="M"));0,08;0))
+			//IF(AttackSpeedOffhand>0)
+			//{
+			//    (((AttackSpeedMainhand+AttackSpeedOffhand)/2)*(1.15+attackSpeedAvg))
+			//}
+			//ELSE
+			//{
+			//    (AttackSpeedMainhand*(1+attackSpeedAvg))
+			//}
+			//+((IF(EnchantressFocusedMind){0.03}else{0}
+			//  +IF(BarbarianWeaponMasterPolearmSpear){0.1}else{0})
+			// +IF(MonkMantraOfRetributionTransgression){0.08}else{0})
+			statsWithout.attackSpeed = 0;
+			double mainHandAttackSpeed = 1;
+			if (items.ContainsKey(Slot.MainHand))
+				mainHandAttackSpeed = items[Slot.MainHand].attacksPerSecond.average;
+
+			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
+			{
+				statsWithout.attackSpeed += ((mainHandAttackSpeed + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + attackSpeedAvg);
+			}
+			else
+			{
+				statsWithout.attackSpeed += mainHandAttackSpeed * (1 + attackSpeedAvg);
+			}
+			statsWithout.attackSpeed = Math.Round(statsWithout.attackSpeed, 3, MidpointRounding.AwayFromZero);
+
+			statsWithout.dps = Math.Round((weaponDamageAvgTot / weaponNumber + damageAvg) * (1 + (float)statsWithout.primaryStat / 100) * statsWithout.attackSpeed * (1 + critChance * critDamage), 2, MidpointRounding.AwayFromZero);
+			statsWithout.damage = Math.Round((weaponDamageAvgTot / weaponNumber + damageAvg) * (1 + (float)statsWithout.primaryStat / 100) * (1 + critChance * critDamage), 2, MidpointRounding.AwayFromZero);
+
+			statsWithout.armor = stats.armor - (item.armor != null ? (int)item.armor.average : 0);
+			statsWithout.damageReduction = Math.Round((double)statsWithout.armor / (50 * MonsterLevel + statsWithout.armor), 4, MidpointRounding.AwayFromZero);
+
+			statsWithout.physicalResist = statsWithout.intelligence / 10 + resistAll + resistPhysical;
+			statsWithout.fireResist = statsWithout.intelligence / 10 + resistAll + resistFire;
+			statsWithout.coldResist = statsWithout.intelligence / 10 + resistAll + resistCold;
+			statsWithout.lightningResist = statsWithout.intelligence / 10 + resistAll + resistLightning;
+			statsWithout.poisonResist = statsWithout.intelligence / 10 + resistAll + resistPoison;
+			statsWithout.arcaneResist = statsWithout.intelligence / 10 + resistAll + resistArcane;
+			resistAvg = Math.Round((double)(statsWithout.physicalResist + statsWithout.fireResist + statsWithout.coldResist + statsWithout.lightningResist + statsWithout.poisonResist + statsWithout.arcaneResist) / 6, MidpointRounding.AwayFromZero);
+			//resistAvg = Math.Min(Math.Min(statsWithout.physicalResist, statsWithout.fireResist), statsWithout.arcaneResist);
+			damageReductionResist = Math.Round(resistAvg / (5 * MonsterLevel + resistAvg), 4, MidpointRounding.AwayFromZero);
+
+			//EHP: = Life / ((1 - DR from Armor) * (1 - DR from Resistance) * (1 - 0.30 if monk or barbarian) * (1 - DR from other source))
+			statsWithout.effectiveHp = (int)(statsWithout.life / ((1 - statsWithout.damageReduction) * (1 - damageReductionResist)));
+
+
+			// Return items like before
+			items.Add(slot, item);
+			SetItemsValues();
+
+			return statsWithout;
 		}
 	}
 }

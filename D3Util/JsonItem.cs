@@ -248,7 +248,7 @@ namespace D3Util
 	public class Salvage
 	{
 		public double chance { get; set; }
-		public Item item { get; set; }
+		public JsonItem item { get; set; }
 		public int quantity { get; set; }
 
 		public override string ToString()
@@ -286,7 +286,7 @@ namespace D3Util
 		public string slug { get; set; }
 		public string name { get; set; }
 		public List<Rank> ranks { get; set; }
-		public List<Item> items { get; set; }
+		public List<JsonItem> items { get; set; }
 	}
 
 	[DataContract(Name = "AttributesRaw")]
@@ -322,7 +322,7 @@ namespace D3Util
 
 	public class Gem
 	{
-		public Item item { get; set; }
+		public JsonItem item { get; set; }
 		public AttributesRawGem attributesRaw { get; set; }
 		public List<string> attributes { get; set; }
 
