@@ -92,6 +92,45 @@ namespace D3Util
 						lblAttribute.Text = "Empty Socket";
 						flpMagicAttribute.Controls.Add(lblAttribute);
 					}
+
+				if (Item.set != null)
+				{
+					Label lblAttribute = new Label();
+					lblAttribute.AutoSize = true;
+					lblAttribute.ForeColor = Color.Green;
+					lblAttribute.Margin = new Padding(lblAttribute.Margin.Left, lblAttribute.PreferredHeight, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+					lblAttribute.Text = Item.set.name;
+					flpMagicAttribute.Controls.Add(lblAttribute);
+
+					foreach (var item in Item.set.items)
+					{
+						lblAttribute = new Label();
+						lblAttribute.AutoSize = true;
+						lblAttribute.ForeColor = Color.Gray;
+						lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+						lblAttribute.Text = item.name;
+						flpMagicAttribute.Controls.Add(lblAttribute);
+					}
+
+					foreach (var rank in Item.set.ranks)
+					{
+						lblAttribute = new Label();
+						lblAttribute.AutoSize = true;
+						lblAttribute.ForeColor = Color.Gray;
+						lblAttribute.Text = "(" + rank.required + ") Set:";
+						flpMagicAttribute.Controls.Add(lblAttribute);
+
+						foreach (var item in rank.attributes)
+						{
+							lblAttribute = new Label();
+							lblAttribute.AutoSize = true;
+							lblAttribute.ForeColor = Color.Gray;
+							lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+							lblAttribute.Text = item;
+							flpMagicAttribute.Controls.Add(lblAttribute);
+						}
+					}
+				}
 			}
 
 			lblDps.Text = Item != null ? Item.DpsDifference.ToString("N2") : string.Empty;
