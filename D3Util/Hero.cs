@@ -45,6 +45,12 @@ namespace D3Util
 
 	public class Hero
 	{
+		public const string CLASS_BARBARIAN = "barbarian";
+		public const string CLASS_DEMON_HUNTER = "demon-hunter";
+		public const string CLASS_MONK = "monk";
+		public const string CLASS_WITCH_DOCTOR = "witch-doctor";
+		public const string CLASS_WIZARD = "wizard";
+
 		public enum Slot
 		{
 			Head,
@@ -102,17 +108,17 @@ namespace D3Util
 
 			switch (heroRoot.@class)
 			{
-				case "barbarian":
+				case CLASS_BARBARIAN:
 					stats.primaryStat = heroRoot.stats.strength;
 					break;
 
-				case "demon-hunter":
-				case "monk":
+				case CLASS_DEMON_HUNTER:
+				case CLASS_MONK:
 					stats.primaryStat = heroRoot.stats.dexterity;
 					break;
 
-				case "witch-doctor":
-				case "wizard":
+				case CLASS_WITCH_DOCTOR:
+				case CLASS_WIZARD:
 					stats.primaryStat = heroRoot.stats.intelligence;
 					break;
 			}
@@ -397,24 +403,24 @@ namespace D3Util
 
 			Stats statsWithout = new Stats();
 
-			statsWithout.strength = (HeroLevel + paragonLevel) * (@class == "barbarian" ? 3 : 1) + strength + 7;
-			statsWithout.dexterity = (HeroLevel + paragonLevel) * (@class == "demon-hunter" || @class == "monk" ? 3 : 1) + dexterity + 7;
-			statsWithout.intelligence = (HeroLevel + paragonLevel) * (@class == "witch-doctor" || @class == "wizard" ? 3 : 1) + intelligence + 7;
+			statsWithout.strength = (HeroLevel + paragonLevel) * (@class == CLASS_BARBARIAN ? 3 : 1) + strength + 7;
+			statsWithout.dexterity = (HeroLevel + paragonLevel) * (@class == CLASS_DEMON_HUNTER || @class == CLASS_MONK ? 3 : 1) + dexterity + 7;
+			statsWithout.intelligence = (HeroLevel + paragonLevel) * (@class == CLASS_WITCH_DOCTOR || @class == CLASS_WIZARD ? 3 : 1) + intelligence + 7;
 			statsWithout.vitality = (HeroLevel + paragonLevel) * 2 + vitality + 7;
 
 			switch (@class)
 			{
-				case "barbarian":
+				case CLASS_BARBARIAN:
 					statsWithout.primaryStat = statsWithout.strength;
 					break;
 
-				case "demon-hunter":
-				case "monk":
+				case CLASS_DEMON_HUNTER:
+				case CLASS_MONK:
 					statsWithout.primaryStat = statsWithout.dexterity;
 					break;
 
-				case "witch-doctor":
-				case "wizard":
+				case CLASS_WITCH_DOCTOR:
+				case CLASS_WIZARD:
 					statsWithout.primaryStat = statsWithout.intelligence;
 					break;
 			}
@@ -444,6 +450,11 @@ namespace D3Util
 			double mainHandAttackSpeed = 1;
 			if (items.ContainsKey(Slot.MainHand))
 				mainHandAttackSpeed = items[Slot.MainHand].attacksPerSecond.average;
+			else
+			{
+				weaponDamageAvgTot = 2.5;
+				weaponNumber = 1;
+			}
 
 			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
 			{
