@@ -33,6 +33,7 @@ namespace D3Util
 
 		public Attribute damage { get; set; }
 
+		public Set setOwned { get; set; }
 		public double DpsDifference { get; set; }
 		public int EhpDifference { get; set; }
 
@@ -66,8 +67,36 @@ namespace D3Util
 			damage = root.damage;
 		}
 
-		public void CalculDifference(Hero hero, Hero.Slot slot)
+		public void CalculWithHero(Hero hero, Hero.Slot slot)
 		{
+			if (set != null)
+			{
+				setOwned = new Set();
+				setOwned.slug = set.slug;
+				setOwned.name = set.name;
+				setOwned.ranks = new List<Rank>();
+				setOwned.items = new List<JsonItem>();
+				foreach (var setItem in set.items)
+				{
+					foreach (var item in hero.items)
+					{
+						if (item.Value._Root.id == setItem.id)
+						{
+							setOwned.items.Add(setItem);
+							foreach (var rank in set.ranks)
+							{
+								if (rank.required == setOwned.items.Count)
+								{
+									setOwned.ranks.Add(rank);
+									break;
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+
 			Stats statsWithout = hero.CalculStatsWithout(slot);
 
 			DpsDifference = hero.statsUnbuffed.dps - statsWithout.dps;

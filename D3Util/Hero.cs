@@ -217,7 +217,7 @@ namespace D3Util
 			for (int i = 0; i < items.Count; i++)
 			{
 				var item = items.ElementAt(i);
-				item.Value.CalculDifference(this, item.Key);
+				item.Value.CalculWithHero(this, item.Key);
 			}
 		}
 

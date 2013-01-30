@@ -106,7 +106,7 @@ namespace D3Util
 					{
 						lblAttribute = new Label();
 						lblAttribute.AutoSize = true;
-						lblAttribute.ForeColor = Color.Gray;
+						lblAttribute.ForeColor = Item.setOwned.items.Contains(item) ? Color.Black : Color.Gray;
 						lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
 						lblAttribute.Text = item.name;
 						flpMagicAttribute.Controls.Add(lblAttribute);
@@ -114,9 +114,10 @@ namespace D3Util
 
 					foreach (var rank in Item.set.ranks)
 					{
+						bool rankContains = Item.setOwned.ranks.Contains(rank);
 						lblAttribute = new Label();
 						lblAttribute.AutoSize = true;
-						lblAttribute.ForeColor = Color.Gray;
+						lblAttribute.ForeColor = rankContains ? Color.Black : Color.Gray;
 						lblAttribute.Text = "(" + rank.required + ") Set:";
 						flpMagicAttribute.Controls.Add(lblAttribute);
 
@@ -124,7 +125,7 @@ namespace D3Util
 						{
 							lblAttribute = new Label();
 							lblAttribute.AutoSize = true;
-							lblAttribute.ForeColor = Color.Gray;
+							lblAttribute.ForeColor = rankContains ? Color.Black : Color.Gray;
 							lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
 							lblAttribute.Text = item;
 							flpMagicAttribute.Controls.Add(lblAttribute);
