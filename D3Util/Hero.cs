@@ -183,14 +183,15 @@ namespace D3Util
 			//  +IF(BarbarianWeaponMasterPolearmSpear){0.1}else{0})
 			// +IF(MonkMantraOfRetributionTransgression){0.08}else{0})
 			statsUnbuffed.attackSpeed = 0;
-			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
-			{
-				statsUnbuffed.attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + attackSpeedAvg);
-			}
-			else
-			{
-				statsUnbuffed.attackSpeed += items[Slot.MainHand].attacksPerSecond.average * (1 + attackSpeedAvg);
-			}
+			if (items.ContainsKey(Slot.MainHand))
+				if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
+				{
+					statsUnbuffed.attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + attackSpeedAvg);
+				}
+				else
+				{
+					statsUnbuffed.attackSpeed += items[Slot.MainHand].attacksPerSecond.average * (1 + attackSpeedAvg);
+				}
 			statsUnbuffed.attackSpeed = Math.Round(statsUnbuffed.attackSpeed, 3, MidpointRounding.AwayFromZero);
 
 			statsUnbuffed.dps = Math.Round((weaponDamageAvgTot / weaponNumber + damageAvg) * (1 + (float)statsUnbuffed.primaryStat / 100) * statsUnbuffed.attackSpeed * (1 + critChance * critDamage), 2, MidpointRounding.AwayFromZero);
@@ -355,14 +356,15 @@ namespace D3Util
 		public double DpsUnbuffedAdd(double damageAvg = 0, int primaryStat = 0, double attackSpeedAvg = 0, double critChance = 0, double critDamage = 0)
 		{
 			double attackSpeed = 0;
-			if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
-			{
-				attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + this.attackSpeedAvg + attackSpeedAvg);
-			}
-			else
-			{
-				attackSpeed += items[Slot.MainHand].attacksPerSecond.average * (1 + this.attackSpeedAvg + attackSpeedAvg);
-			}
+			if (items.ContainsKey(Slot.MainHand))
+				if (items.ContainsKey(Slot.OffHand) && items[Slot.OffHand].attacksPerSecond != null)
+				{
+					attackSpeed += ((items[Slot.MainHand].attacksPerSecond.average + items[Slot.OffHand].attacksPerSecond.average) / 2) * (1.15f + this.attackSpeedAvg + attackSpeedAvg);
+				}
+				else
+				{
+					attackSpeed += items[Slot.MainHand].attacksPerSecond.average * (1 + this.attackSpeedAvg + attackSpeedAvg);
+				}
 			attackSpeed = Math.Round(attackSpeed, 3, MidpointRounding.AwayFromZero);
 
 			double dps = Math.Round((weaponDamageAvgTot / weaponNumber + this.damageAvg + damageAvg) * (1 + (float)(statsUnbuffed.primaryStat + primaryStat) / 100) * attackSpeed * (1 + (this.critChance + critChance) * (this.critDamage + critDamage)), 2, MidpointRounding.AwayFromZero);
