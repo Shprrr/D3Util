@@ -65,19 +65,69 @@ namespace D3Util
 			flpMagicAttribute.Controls.Clear();
 			if (Item != null)
 			{
-				foreach (var attribute in Item.attributes)
+				Label lblAttribute = new Label();
+				lblAttribute.AutoSize = true;
+				lblAttribute.Text = "Primary";
+				flpMagicAttribute.Controls.Add(lblAttribute);
+				foreach (var attribute in Item.attributes.primary)
 				{
-					Label lblAttribute = new Label();
+					lblAttribute = new Label();
 					lblAttribute.AutoSize = true;
-					lblAttribute.Text = attribute;
+					lblAttribute.Text = attribute.text;
 					flpMagicAttribute.Controls.Add(lblAttribute);
 				}
 
+				lblAttribute = new Label();
+				lblAttribute.AutoSize = true;
+				lblAttribute.Margin = new Padding(lblAttribute.Margin.Left, lblAttribute.PreferredHeight, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+				lblAttribute.Text = "Secondary";
+				flpMagicAttribute.Controls.Add(lblAttribute);
+				foreach (var attribute in Item.attributes.secondary)
+				{
+					lblAttribute = new Label();
+					lblAttribute.AutoSize = true;
+					lblAttribute.Text = attribute.text;
+					flpMagicAttribute.Controls.Add(lblAttribute);
+				}
+
+				lblAttribute = new Label();
+				lblAttribute.AutoSize = true;
+				lblAttribute.Margin = new Padding(lblAttribute.Margin.Left, lblAttribute.PreferredHeight, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+				lblAttribute.Text = "Passive";
+				flpMagicAttribute.Controls.Add(lblAttribute);
+				foreach (var attribute in Item.attributes.passive)
+				{
+					lblAttribute = new Label();
+					lblAttribute.AutoSize = true;
+					lblAttribute.Text = attribute.text;
+					flpMagicAttribute.Controls.Add(lblAttribute);
+				}
+
+				//TODO: Do a better formating.
+				lblAttribute = new Label();
+				lblAttribute.AutoSize = true;
+				lblAttribute.Text = " ";
+				flpMagicAttribute.Controls.Add(lblAttribute);
+
 				foreach (var gem in Item.gems)
 				{
-					foreach (var attribute in gem.attributes)
+					foreach (var attribute in gem.attributes.primary)
 					{
-						Label lblAttribute = new Label();
+						lblAttribute = new Label();
+						lblAttribute.AutoSize = true;
+						lblAttribute.Text = attribute + " (Gem)";
+						flpMagicAttribute.Controls.Add(lblAttribute);
+					}
+					foreach (var attribute in gem.attributes.secondary)
+					{
+						lblAttribute = new Label();
+						lblAttribute.AutoSize = true;
+						lblAttribute.Text = attribute + " (Gem)";
+						flpMagicAttribute.Controls.Add(lblAttribute);
+					}
+					foreach (var attribute in gem.attributes.passive)
+					{
+						lblAttribute = new Label();
 						lblAttribute.AutoSize = true;
 						lblAttribute.Text = attribute + " (Gem)";
 						flpMagicAttribute.Controls.Add(lblAttribute);
@@ -87,7 +137,7 @@ namespace D3Util
 				if (Item.attributesRaw.Sockets != null)
 					for (int i = 0; i < Item.attributesRaw.Sockets.average - Item.gems.Count; i++)
 					{
-						Label lblAttribute = new Label();
+						lblAttribute = new Label();
 						lblAttribute.AutoSize = true;
 						lblAttribute.Text = "Empty Socket";
 						flpMagicAttribute.Controls.Add(lblAttribute);
@@ -95,7 +145,7 @@ namespace D3Util
 
 				if (Item.set != null)
 				{
-					Label lblAttribute = new Label();
+					lblAttribute = new Label();
 					lblAttribute.AutoSize = true;
 					lblAttribute.ForeColor = Color.Green;
 					lblAttribute.Margin = new Padding(lblAttribute.Margin.Left, lblAttribute.PreferredHeight, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
@@ -121,13 +171,33 @@ namespace D3Util
 						lblAttribute.Text = "(" + rank.required + ") Set:";
 						flpMagicAttribute.Controls.Add(lblAttribute);
 
-						foreach (var item in rank.attributes)
+						foreach (var item in rank.attributes.primary)
 						{
 							lblAttribute = new Label();
 							lblAttribute.AutoSize = true;
 							lblAttribute.ForeColor = rankContains ? Color.Black : Color.Gray;
 							lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
-							lblAttribute.Text = item;
+							lblAttribute.Text = item.text;
+							flpMagicAttribute.Controls.Add(lblAttribute);
+						}
+
+						foreach (var item in rank.attributes.secondary)
+						{
+							lblAttribute = new Label();
+							lblAttribute.AutoSize = true;
+							lblAttribute.ForeColor = rankContains ? Color.Black : Color.Gray;
+							lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+							lblAttribute.Text = item.text;
+							flpMagicAttribute.Controls.Add(lblAttribute);
+						}
+
+						foreach (var item in rank.attributes.passive)
+						{
+							lblAttribute = new Label();
+							lblAttribute.AutoSize = true;
+							lblAttribute.ForeColor = rankContains ? Color.Black : Color.Gray;
+							lblAttribute.Margin = new Padding(lblAttribute.Margin.Left + lblAttribute.PreferredHeight, lblAttribute.Margin.Top, lblAttribute.Margin.Right, lblAttribute.Margin.Bottom);
+							lblAttribute.Text = item.text;
 							flpMagicAttribute.Controls.Add(lblAttribute);
 						}
 					}

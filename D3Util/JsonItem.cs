@@ -16,6 +16,8 @@ namespace D3Util
 		public int requiredLevel { get; set; }
 		public int itemLevel { get; set; }
 		public int bonusAffixes { get; set; }
+		public int bonusAffixesMax { get; set; }
+		public bool accountBound { get; set; }
 		public string flavorText { get; set; }
 		public string typeName { get; set; }
 		public Type type { get; set; }
@@ -24,12 +26,18 @@ namespace D3Util
 		public Attribute minDamage { get; set; }
 		public Attribute maxDamage { get; set; }
 		public Attribute armor { get; set; }
-		public List<string> attributes { get; set; }
+		public List<string> slots { get; set; }
+		public Attributes attributes { get; set; }
 		public AttributesRaw attributesRaw { get; set; }
-		public List<SocketEffect> socketEffects { get; set; }
-		public List<Salvage> salvage { get; set; }
-		public Set set { get; set; }
+		public List<object> randomAffixes { get; set; }
 		public List<Gem> gems { get; set; }
+		public List<SocketEffect> socketEffects { get; set; }
+		public JsonItem transmogItem { get; set; }
+		public List<CraftedBy> craftedBy { get; set; }
+		//public List<Salvage> salvage { get; set; }
+		public Set set { get; set; }
+		public int seasonRequiredToDrop { get; set; }
+		public bool isSeasonRequiredToDrop { get; set; }
 
 		public Attribute damage
 		{
@@ -48,20 +56,20 @@ namespace D3Util
 
 				if (attributesRaw.Damage_Weapon_Min_Cold != null)
 				{
-				dam.min += attributesRaw.Damage_Weapon_Min_Cold.min;
-				dam.max += attributesRaw.Damage_Weapon_Min_Cold.min + attributesRaw.Damage_Weapon_Delta_Cold.max;
+					dam.min += attributesRaw.Damage_Weapon_Min_Cold.min;
+					dam.max += attributesRaw.Damage_Weapon_Min_Cold.min + attributesRaw.Damage_Weapon_Delta_Cold.max;
 				}
 
 				if (attributesRaw.Damage_Weapon_Min_Lightning != null)
 				{
-				dam.min += attributesRaw.Damage_Weapon_Min_Lightning.min;
-				dam.max += attributesRaw.Damage_Weapon_Min_Lightning.min + attributesRaw.Damage_Weapon_Delta_Lightning.max;
+					dam.min += attributesRaw.Damage_Weapon_Min_Lightning.min;
+					dam.max += attributesRaw.Damage_Weapon_Min_Lightning.min + attributesRaw.Damage_Weapon_Delta_Lightning.max;
 				}
 
 				if (attributesRaw.Damage_Weapon_Min_Poison != null)
 				{
-				dam.min += attributesRaw.Damage_Weapon_Min_Poison.min;
-				dam.max += attributesRaw.Damage_Weapon_Min_Poison.min + attributesRaw.Damage_Weapon_Delta_Poison.max;
+					dam.min += attributesRaw.Damage_Weapon_Min_Poison.min;
+					dam.max += attributesRaw.Damage_Weapon_Min_Poison.min + attributesRaw.Damage_Weapon_Delta_Poison.max;
 				}
 
 				if (attributesRaw.Damage_Weapon_Min_Arcane != null)
@@ -114,6 +122,25 @@ namespace D3Util
 		}
 	}
 
+	public class Attributes
+	{
+		public List<AttributeText> primary { get; set; }
+		public List<AttributeText> secondary { get; set; }
+		public List<AttributeText> passive { get; set; }
+	}
+
+	public class AttributeText
+	{
+		public string text { get; set; }
+		public string color { get; set; }
+		public string affixType { get; set; }
+
+		public override string ToString()
+		{
+			return text;
+		}
+	}
+
 	[DataContract(Name = "AttributesRaw")]
 	public class AttributesRaw
 	{
@@ -121,6 +148,8 @@ namespace D3Util
 		public Attribute Durability_Cur { get; set; }
 		[DataMember(Name = "Durability_Max")]
 		public Attribute Durability_Max { get; set; }
+		[DataMember(Name = "Item_Indestructible")]
+		public Attribute Item_Indestructible { get; set; }
 		[DataMember(Name = "Attacks_Per_Second_Item")]
 		public Attribute Attacks_Per_Second_Item { get; set; }
 		/// <summary>
@@ -137,6 +166,10 @@ namespace D3Util
 		public Attribute Damage_Weapon_Min_Physical { get; set; }
 		[DataMember(Name = "Damage_Weapon_Delta#Physical")]
 		public Attribute Damage_Weapon_Delta_Physical { get; set; }
+		[DataMember(Name = "Damage_Weapon_Bonus_Min_X1#Physical")]
+		public Attribute Damage_Weapon_Bonus_Min_X1_Physical { get; set; }
+		[DataMember(Name = "Damage_Weapon_Bonus_Delta_X1#Physical")]
+		public Attribute Damage_Weapon_Bonus_Delta_X1_Physical { get; set; }
 		[DataMember(Name = "Damage_Weapon_Min#Fire")]
 		public Attribute Damage_Weapon_Min_Fire { get; set; }
 		[DataMember(Name = "Damage_Weapon_Delta#Fire")]
@@ -165,8 +198,26 @@ namespace D3Util
 		public Attribute Damage_Min_Physical { get; set; }
 		[DataMember(Name = "Damage_Delta#Physical")]
 		public Attribute Damage_Delta_Physical { get; set; }
+		[DataMember(Name = "Damage_Weapon_Percent_All")]
+		public Attribute Damage_Weapon_Percent_All { get; set; }
 		[DataMember(Name = "Damage_Weapon_Percent_Bonus#Physical")]
 		public Attribute Damage_Weapon_Percent_Bonus_Physical { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Physical")]
+		public Attribute Damage_Dealt_Percent_Bonus_Physical { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Fire")]
+		public Attribute Damage_Dealt_Percent_Bonus_Fire { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Cold")]
+		public Attribute Damage_Dealt_Percent_Bonus_Cold { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Lightning")]
+		public Attribute Damage_Dealt_Percent_Bonus_Lightning { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Poison")]
+		public Attribute Damage_Dealt_Percent_Bonus_Poison { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Arcane")]
+		public Attribute Damage_Dealt_Percent_Bonus_Arcane { get; set; }
+		[DataMember(Name = "Damage_Dealt_Percent_Bonus#Holy")]
+		public Attribute Damage_Dealt_Percent_Bonus_Holy { get; set; }
+		[DataMember(Name = "Damage_Percent_Bonus_Vs_Elites")]
+		public Attribute Damage_Percent_Bonus_Vs_Elites { get; set; }
 		[DataMember(Name = "Crossbow")]
 		public Attribute Crossbow { get; set; }
 		[DataMember(Name = "Armor_Item")]
@@ -191,6 +242,8 @@ namespace D3Util
 		public Attribute Hitpoints_Regen_Per_Second { get; set; }
 		[DataMember(Name = "Hitpoints_On_Hit")]
 		public Attribute Hitpoints_On_Hit { get; set; }
+		[DataMember(Name = "Hitpoints_On_Kill")]
+		public Attribute Hitpoints_On_Kill { get; set; }
 		[DataMember(Name = "Health_Globe_Bonus_Health")]
 		public Attribute Health_Globe_Bonus_Health { get; set; }
 		[DataMember(Name = "Resource_Regen_Per_Second#Mana")]
@@ -225,6 +278,8 @@ namespace D3Util
 		public Attribute Thorns_Fixed_Physical { get; set; }
 		[DataMember(Name = "CrowdControl_Reduction")]
 		public Attribute CrowdControl_Reduction { get; set; }
+		[DataMember(Name = "Power_Cooldown_Reduction_Percent_All")]
+		public Attribute Power_Cooldown_Reduction_Percent_All { get; set; }
 		[DataMember(Name = "Gold_PickUp_Radius")]
 		public Attribute Gold_PickUp_Radius { get; set; }
 		[DataMember(Name = "Movement_Scalar")]
@@ -239,6 +294,24 @@ namespace D3Util
 		public Attribute Experience_Bonus { get; set; }
 		[DataMember(Name = "Weapon_On_Hit_Knockback_Proc_Chance")]
 		public Attribute Weapon_On_Hit_Knockback_Proc_Chance { get; set; }
+		[DataMember(Name = "Loot_2_0_Drop")]
+		public Attribute Loot_2_0_Drop { get; set; }
+		[DataMember(Name = "Post_2_1_2_Drop")]
+		public Attribute Post_2_1_2_Drop { get; set; }
+		[DataMember(Name = "IsCrafted")]
+		public Attribute IsCrafted { get; set; }
+		[DataMember(Name = "Ancient_Rank")]
+		public Attribute Ancient_Rank { get; set; }
+		[DataMember(Name = "ConsumableAddSockets")]
+		public Attribute ConsumableAddSockets { get; set; }
+		[DataMember(Name = "Item_Legendary_Item_Base_Item")]
+		public Attribute Item_Legendary_Item_Base_Item { get; set; }
+		[DataMember(Name = "Item_Binding_Level_Override")]
+		public Attribute Item_Binding_Level_Override { get; set; }
+		[DataMember(Name = "Item_LegendaryItem_Level_Override")]
+		public Attribute Item_LegendaryItem_Level_Override { get; set; }
+		[DataMember(Name = "Season")]
+		public Attribute Season { get; set; }
 		/*
 		[DataMember(Name = "")]
 		public Attribute Damage_Weapon_Delta_Poison { get; set; }
@@ -273,7 +346,8 @@ namespace D3Util
 	public class Rank
 	{
 		public int required { get; set; }
-		public List<string> attributes { get; set; }
+		public Attributes attributes { get; set; }
+		public AttributesRaw attributesRaw { get; set; }
 
 		public override string ToString()
 		{
@@ -300,6 +374,8 @@ namespace D3Util
 		public Attribute Magic_Find { get; set; }
 		[DataMember(Name = "Hitpoints_Max_Percent_Bonus_Item")]
 		public Attribute Hitpoints_Max_Percent_Bonus_Item { get; set; }
+		[DataMember(Name = "Power_Cooldown_Reduction_Percent_All")]
+		public Attribute Power_Cooldown_Reduction_Percent_All { get; set; }
 		[DataMember(Name = "Damage_Weapon_Bonus_Min#Physical")]
 		public Attribute Damage_Weapon_Bonus_Min_Physical { get; set; }
 		[DataMember(Name = "Damage_Weapon_Bonus_Delta#Physical")]
@@ -310,6 +386,8 @@ namespace D3Util
 		public Attribute Thorns_Fixed_Physical { get; set; }
 		[DataMember(Name = "Hitpoints_On_Hit")]
 		public Attribute Hitpoints_On_Hit { get; set; }
+		[DataMember(Name = "Damage_Percent_Bonus_Vs_Elites")]
+		public Attribute Damage_Percent_Bonus_Vs_Elites { get; set; }
 		[DataMember(Name = "Strength_Item")]
 		public Attribute Strength_Item { get; set; }
 		[DataMember(Name = "Dexterity_Item")]
@@ -318,13 +396,17 @@ namespace D3Util
 		public Attribute Intelligence_Item { get; set; }
 		[DataMember(Name = "Vitality_Item")]
 		public Attribute Vitality_Item { get; set; }
+		[DataMember(Name = "Resistance_All")]
+		public Attribute Resistance_All { get; set; }
 	}
 
 	public class Gem
 	{
 		public JsonItem item { get; set; }
+		public bool isGem { get; set; }
+		public bool isJewel { get; set; }
+		public Attributes attributes { get; set; }
 		public AttributesRawGem attributesRaw { get; set; }
-		public List<string> attributes { get; set; }
 
 		public override string ToString()
 		{

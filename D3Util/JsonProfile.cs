@@ -7,17 +7,32 @@ namespace D3Util
 {
 	public class Profile
 	{
+		public string battleTag { get; set; }
+		public int paragonLevel { get; set; }
+		public int paragonLevelHardcore { get; set; }
+		public int paragonLevelSeason { get; set; }
+		public int paragonLevelSeasonHardcore { get; set; }
 		public List<JsonHero> heroes { get; set; }
 		public int lastHeroPlayed { get; set; }
 		public int lastUpdated { get; set; }
-		public List<Artisan> artisans { get; set; }
-		public List<Artisan> hardcoreArtisans { get; set; }
 		public Kills kills { get; set; }
+		public int highestHardcoreLevel { get; set; }
 		public TimePlayed timePlayed { get; set; }
 		public List<FallenHero> fallenHeroes { get; set; }
-		public string battleTag { get; set; }
+		public Artisan blacksmith { get; set; }
+		public Artisan jeweler { get; set; }
+		public Artisan mystic { get; set; }
+		public Artisan blacksmithHardcore { get; set; }
+		public Artisan jewelerHardcore { get; set; }
+		public Artisan mysticHardcore { get; set; }
+		public Artisan blacksmithSeason { get; set; }
+		public Artisan jewelerSeason { get; set; }
+		public Artisan mysticSeason { get; set; }
+		public Artisan blacksmithSeasonHardcore { get; set; }
+		public Artisan jewelerSeasonHardcore { get; set; }
+		public Artisan mysticSeasonHardcore { get; set; }
 		public Progression progression { get; set; }
-		public Progression hardcoreProgression { get; set; }
+		public SeasonProfile seasonalProfiles { get; set; }
 
 		public override string ToString()
 		{
@@ -42,6 +57,8 @@ namespace D3Util
 		public int level { get; set; }
 		[DataMember(Name = "hardcore")]
 		public bool hardcore { get; set; }
+		[DataMember(Name = "seasonal")]
+		public bool seasonal { get; set; }
 		[DataMember(Name = "paragonLevel")]
 		public int paragonLevel { get; set; }
 		[DataMember(Name = "gender")]
@@ -84,6 +101,8 @@ namespace D3Util
 	{
 		[DataMember(Name = "barbarian")]
 		public double barbarian { get; set; }
+		[DataMember(Name = "crusader")]
+		public double crusader { get; set; }
 		[DataMember(Name = "demon-hunter")]
 		public double demonHunter { get; set; }
 		[DataMember(Name = "monk")]
@@ -98,6 +117,8 @@ namespace D3Util
 	{
 		public int life { get; set; }
 		public float damage { get; set; }
+		public float toughness { get; set; }
+		public float healing { get; set; }
 		public float attackSpeed { get; set; }
 		public int armor { get; set; }
 		public int strength { get; set; }
@@ -110,18 +131,18 @@ namespace D3Util
 		public int lightningResist { get; set; }
 		public int poisonResist { get; set; }
 		public int arcaneResist { get; set; }
-		public float critDamage { get; set; }
+		public float blockChance { get; set; }
+		public int blockAmountMin { get; set; }
+		public int blockAmountMax { get; set; }
 		public float damageIncrease { get; set; }
 		public float critChance { get; set; }
+		public float critDamage { get; set; }
 		public float damageReduction { get; set; }
-		public float blockChance { get; set; }
 		public float thorns { get; set; }
 		public float lifeSteal { get; set; }
 		public float lifePerKill { get; set; }
 		public float goldFind { get; set; }
 		public float magicFind { get; set; }
-		public int blockAmountMin { get; set; }
-		public int blockAmountMax { get; set; }
 		public float lifeOnHit { get; set; }
 		public int primaryResource { get; set; }
 		public int secondaryResource { get; set; }
@@ -134,15 +155,30 @@ namespace D3Util
 		public string icon { get; set; }
 		public string displayColor { get; set; }
 		public string tooltipParams { get; set; }
-		//public int requiredLevel { get; set; }
-		//public string typeName { get; set; }
-		//public Type type { get; set; }
-		//public List<Gem> gems { get; set; }
+		public JsonItem transmogItem { get; set; }
+		public List<object> randomAffixes { get; set; }
+		public List<CraftedBy> craftedBy { get; set; }
 
 		public override string ToString()
 		{
 			return name;
 		}
+	}
+
+	public class CraftedBy
+	{
+		public string id { get; set; }
+		public string slug { get; set; }
+		public string name { get; set; }
+		public int cost { get; set; }
+		public List<Reagent> reagents { get; set; }
+		public JsonItem itemProduced { get; set; }
+	}
+
+	public class Reagent
+	{
+		public int quantity { get; set; }
+		public JsonItem item { get; set; }
 	}
 
 	public class Head : JsonItem { }
@@ -197,13 +233,13 @@ namespace D3Util
 
 	public class FallenHero
 	{
-		public JsonStats stats { get; set; }
-		public Kills kills { get; set; }
-		public Items items { get; set; }
-		public Death death { get; set; }
 		public string name { get; set; }
 		public int level { get; set; }
+		public JsonStats stats { get; set; }
+		public Items items { get; set; }
+		public Kills kills { get; set; }
 		public bool hardcore { get; set; }
+		public Death death { get; set; }
 		public int heroId { get; set; }
 		public int gender { get; set; }
 		public string @class { get; set; }
@@ -214,36 +250,30 @@ namespace D3Util
 		}
 	}
 
-	public class CompletedQuest
-	{
-		public string slug { get; set; }
-		public string name { get; set; }
-
-		public override string ToString()
-		{
-			return name;
-		}
-	}
-
-	public class Act
-	{
-		public bool completed { get; set; }
-		public List<CompletedQuest> completedQuests { get; set; }
-	}
-
-	public class Difficulty
-	{
-		public Act act1 { get; set; }
-		public Act act2 { get; set; }
-		public Act act3 { get; set; }
-		public Act act4 { get; set; }
-	}
-
 	public class Progression
 	{
-		public Difficulty normal { get; set; }
-		public Difficulty nightmare { get; set; }
-		public Difficulty hell { get; set; }
-		public Difficulty inferno { get; set; }
+		public bool act1 { get; set; }
+		public bool act2 { get; set; }
+		public bool act3 { get; set; }
+		public bool act4 { get; set; }
+		public bool act5 { get; set; }
+	}
+
+	public class SeasonProfile
+	{
+		public Season season0 { get; set; }
+		public Season season1 { get; set; }
+		public Season season2 { get; set; }
+	}
+
+	public class Season
+	{
+		public int seasonId { get; set; }
+		public int paragonLevel { get; set; }
+		public int paragonLevelHardcore { get; set; }
+		public Kills kills { get; set; }
+		public TimePlayed timePlayed { get; set; }
+		public int highestHardcoreLevel { get; set; }
+		public Progression progression { get; set; }
 	}
 }

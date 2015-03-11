@@ -117,7 +117,7 @@
 			this.flpProfile.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flpProfile.Location = new System.Drawing.Point(12, 94);
 			this.flpProfile.Name = "flpProfile";
-			this.flpProfile.Size = new System.Drawing.Size(410, 181);
+			this.flpProfile.Size = new System.Drawing.Size(615, 181);
 			this.flpProfile.TabIndex = 1;
 			// 
 			// btnHero

@@ -24,12 +24,12 @@ namespace D3Util
 		public Attribute minDamage { get; set; }
 		public Attribute maxDamage { get; set; }
 		public Attribute armor { get; set; }
-		public List<string> attributes { get; set; }
+		public Attributes attributes { get; set; }
 		public AttributesRaw attributesRaw { get; set; }
-		public List<SocketEffect> socketEffects { get; set; }
-		public List<Salvage> salvage { get; set; }
-		public Set set { get; set; }
 		public List<Gem> gems { get; set; }
+		public List<SocketEffect> socketEffects { get; set; }
+		//public List<Salvage> salvage { get; set; }
+		public Set set { get; set; }
 
 		public Attribute damage { get; set; }
 
@@ -60,7 +60,7 @@ namespace D3Util
 			attributes = root.attributes;
 			attributesRaw = root.attributesRaw;
 			socketEffects = root.socketEffects;
-			salvage = root.salvage;
+			//salvage = root.salvage;
 			set = root.set;
 			gems = root.gems;
 

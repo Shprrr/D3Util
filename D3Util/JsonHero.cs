@@ -21,6 +21,10 @@ namespace D3Util
 		public int paragonLevel { get; set; }
 		[DataMember(Name = "hardcore")]
 		public bool hardcore { get; set; }
+		[DataMember(Name = "seasonal")]
+		public bool seasonal { get; set; }
+		[DataMember(Name = "seasonCreated")]
+		public int seasonCreated { get; set; }
 		[DataMember(Name = "skills")]
 		public Skills skills { get; set; }
 		[DataMember(Name = "items")]
@@ -31,8 +35,8 @@ namespace D3Util
 		public JsonStats stats { get; set; }
 		[DataMember(Name = "kills")]
 		public Kills kills { get; set; }
-		[DataMember(Name = "progress")]
-		public Progression progress { get; set; }
+		[DataMember(Name = "progression")]
+		public HeroProgression progression { get; set; }
 		[DataMember(Name = "dead")]
 		public bool dead { get; set; }
 		[DataMember(Name = "last-updated")]
@@ -183,5 +187,31 @@ namespace D3Util
 		public Follower templar { get; set; }
 		public Follower scoundrel { get; set; }
 		public Follower enchantress { get; set; }
+	}
+
+	public class HeroProgression
+	{
+		public Act act1 { get; set; }
+		public Act act2 { get; set; }
+		public Act act3 { get; set; }
+		public Act act4 { get; set; }
+		public Act act5 { get; set; }
+	}
+
+	public class Act
+	{
+		public bool completed { get; set; }
+		public List<CompletedQuest> completedQuests { get; set; }
+	}
+
+	public class CompletedQuest
+	{
+		public string slug { get; set; }
+		public string name { get; set; }
+
+		public override string ToString()
+		{
+			return name;
+		}
 	}
 }
