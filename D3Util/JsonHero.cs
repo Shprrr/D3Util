@@ -7,6 +7,8 @@ namespace D3Util
 	[DataContract(Name = "hero")]
 	public class HeroRoot
 	{
+		public const string HERO_URL = "http://us.battle.net/api/d3/profile/{0}/hero/{1}";
+
 		[DataMember(Name = "id")]
 		public int id { get; set; }
 		[DataMember(Name = "name")]

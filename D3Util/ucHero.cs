@@ -17,7 +17,7 @@ namespace D3Util
 
 			DataContractJsonSerializer heroSerializer = new DataContractJsonSerializer(typeof(HeroRoot));
 			heroRoot = (HeroRoot)heroSerializer.ReadObject(
-				frmMain.GetStream("http://us.battle.net/api/d3/profile/" + battleTag.Replace('#', '-') + "/hero/" + jsonHero.id));
+				frmMain.GetStream(string.Format(HeroRoot.HERO_URL, battleTag.Replace('#', '-'), jsonHero.id)));
 
 			hero = new Hero(heroRoot);
 

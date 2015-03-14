@@ -226,31 +226,31 @@ namespace D3Util
 		{
 			DataContractJsonSerializer itemSerializer = new DataContractJsonSerializer(typeof(ItemRoot));
 			if (heroRoot.items.head != null)
-				items.Add(Slot.Head, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.head.tooltipParams))));
+				items.Add(Slot.Head, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.head.tooltipParams)))));
 			if (heroRoot.items.torso != null)
-				items.Add(Slot.Torso, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.torso.tooltipParams))));
+				items.Add(Slot.Torso, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.torso.tooltipParams)))));
 			if (heroRoot.items.feet != null)
-				items.Add(Slot.Feet, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.feet.tooltipParams))));
+				items.Add(Slot.Feet, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.feet.tooltipParams)))));
 			if (heroRoot.items.hands != null)
-				items.Add(Slot.Hands, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.hands.tooltipParams))));
+				items.Add(Slot.Hands, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.hands.tooltipParams)))));
 			if (heroRoot.items.shoulders != null)
-				items.Add(Slot.Shoulders, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.shoulders.tooltipParams))));
+				items.Add(Slot.Shoulders, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.shoulders.tooltipParams)))));
 			if (heroRoot.items.legs != null)
-				items.Add(Slot.Legs, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.legs.tooltipParams))));
+				items.Add(Slot.Legs, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.legs.tooltipParams)))));
 			if (heroRoot.items.bracers != null)
-				items.Add(Slot.Bracers, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.bracers.tooltipParams))));
+				items.Add(Slot.Bracers, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.bracers.tooltipParams)))));
 			if (heroRoot.items.mainHand != null)
-				items.Add(Slot.MainHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.mainHand.tooltipParams))));
+				items.Add(Slot.MainHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.mainHand.tooltipParams)))));
 			if (heroRoot.items.offHand != null)
-				items.Add(Slot.OffHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.offHand.tooltipParams))));
+				items.Add(Slot.OffHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.offHand.tooltipParams)))));
 			if (heroRoot.items.waist != null)
-				items.Add(Slot.Waist, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.waist.tooltipParams))));
+				items.Add(Slot.Waist, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.waist.tooltipParams)))));
 			if (heroRoot.items.leftFinger != null)
-				items.Add(Slot.LeftFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.leftFinger.tooltipParams))));
+				items.Add(Slot.LeftFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.leftFinger.tooltipParams)))));
 			if (heroRoot.items.rightFinger != null)
-				items.Add(Slot.RightFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.rightFinger.tooltipParams))));
+				items.Add(Slot.RightFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.rightFinger.tooltipParams)))));
 			if (heroRoot.items.neck != null)
-				items.Add(Slot.Neck, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream("http://us.battle.net/api/d3/data/" + heroRoot.items.neck.tooltipParams))));
+				items.Add(Slot.Neck, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.neck.tooltipParams)))));
 		}
 
 		protected void SetItemsValues()

@@ -7,6 +7,8 @@ namespace D3Util
 {
 	public class Profile
 	{
+		public const string PROFILE_URL = "http://us.battle.net/api/d3/profile/{0}-{1}/";
+
 		public string battleTag { get; set; }
 		public int paragonLevel { get; set; }
 		public int paragonLevelHardcore { get; set; }

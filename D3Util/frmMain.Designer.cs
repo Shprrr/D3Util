@@ -30,6 +30,8 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLoadProfile = new System.Windows.Forms.Button();
+			this.btnSaveProfile = new System.Windows.Forms.Button();
 			this.cboBattleTagName = new System.Windows.Forms.ComboBox();
 			this.btnGetProfile = new System.Windows.Forms.Button();
 			this.txtBattleTagCode = new System.Windows.Forms.TextBox();
@@ -38,12 +40,19 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.flpProfile = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnHero = new System.Windows.Forms.Button();
+			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.grbProgression = new System.Windows.Forms.GroupBox();
+			this.lblProgression = new System.Windows.Forms.Label();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.groupBox1.SuspendLayout();
 			this.flpProfile.SuspendLayout();
+			this.grbProgression.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.btnLoadProfile);
+			this.groupBox1.Controls.Add(this.btnSaveProfile);
 			this.groupBox1.Controls.Add(this.cboBattleTagName);
 			this.groupBox1.Controls.Add(this.btnGetProfile);
 			this.groupBox1.Controls.Add(this.txtBattleTagCode);
@@ -56,6 +65,28 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Career Info";
+			// 
+			// btnLoadProfile
+			// 
+			this.btnLoadProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnLoadProfile.Location = new System.Drawing.Point(87, 47);
+			this.btnLoadProfile.Name = "btnLoadProfile";
+			this.btnLoadProfile.Size = new System.Drawing.Size(75, 23);
+			this.btnLoadProfile.TabIndex = 6;
+			this.btnLoadProfile.Text = "&Load profile";
+			this.btnLoadProfile.UseVisualStyleBackColor = true;
+			this.btnLoadProfile.Visible = false;
+			// 
+			// btnSaveProfile
+			// 
+			this.btnSaveProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSaveProfile.Location = new System.Drawing.Point(6, 47);
+			this.btnSaveProfile.Name = "btnSaveProfile";
+			this.btnSaveProfile.Size = new System.Drawing.Size(75, 23);
+			this.btnSaveProfile.TabIndex = 5;
+			this.btnSaveProfile.Text = "&Save profile";
+			this.btnSaveProfile.UseVisualStyleBackColor = true;
+			this.btnSaveProfile.Click += new System.EventHandler(this.btnSaveProfile_Click);
 			// 
 			// cboBattleTagName
 			// 
@@ -74,7 +105,7 @@
 			this.btnGetProfile.Name = "btnGetProfile";
 			this.btnGetProfile.Size = new System.Drawing.Size(75, 23);
 			this.btnGetProfile.TabIndex = 4;
-			this.btnGetProfile.Text = "Get Profile";
+			this.btnGetProfile.Text = "&Get Profile";
 			this.btnGetProfile.UseVisualStyleBackColor = true;
 			this.btnGetProfile.Click += new System.EventHandler(this.btnGetProfile_Click);
 			// 
@@ -132,12 +163,46 @@
 			this.btnHero.UseVisualStyleBackColor = true;
 			this.btnHero.Click += new System.EventHandler(this.btnHero_Click);
 			// 
+			// grbProgression
+			// 
+			this.grbProgression.AutoSize = true;
+			this.grbProgression.Controls.Add(this.progressBar);
+			this.grbProgression.Controls.Add(this.lblProgression);
+			this.grbProgression.Location = new System.Drawing.Point(683, 12);
+			this.grbProgression.Name = "grbProgression";
+			this.grbProgression.Size = new System.Drawing.Size(212, 97);
+			this.grbProgression.TabIndex = 2;
+			this.grbProgression.TabStop = false;
+			this.grbProgression.UseWaitCursor = true;
+			this.grbProgression.Visible = false;
+			// 
+			// lblProgression
+			// 
+			this.lblProgression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblProgression.Location = new System.Drawing.Point(9, 58);
+			this.lblProgression.Name = "lblProgression";
+			this.lblProgression.Size = new System.Drawing.Size(197, 23);
+			this.lblProgression.TabIndex = 1;
+			this.lblProgression.Text = "0/10";
+			this.lblProgression.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.lblProgression.UseWaitCursor = true;
+			// 
+			// progressBar
+			// 
+			this.progressBar.Location = new System.Drawing.Point(6, 32);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(200, 23);
+			this.progressBar.TabIndex = 0;
+			this.progressBar.UseWaitCursor = true;
+			// 
 			// frmMain
 			// 
 			this.AcceptButton = this.btnGetProfile;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1004, 717);
+			this.Controls.Add(this.grbProgression);
 			this.Controls.Add(this.flpProfile);
 			this.Controls.Add(this.groupBox1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -146,7 +211,9 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.flpProfile.ResumeLayout(false);
+			this.grbProgression.ResumeLayout(false);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -161,5 +228,11 @@
 		private System.Windows.Forms.FlowLayoutPanel flpProfile;
 		private System.Windows.Forms.Button btnHero;
 		private System.Windows.Forms.ComboBox cboBattleTagName;
+		private System.Windows.Forms.Button btnLoadProfile;
+		private System.Windows.Forms.Button btnSaveProfile;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+		private System.Windows.Forms.GroupBox grbProgression;
+		private System.Windows.Forms.ProgressBar progressBar;
+		private System.Windows.Forms.Label lblProgression;
 	}
 }

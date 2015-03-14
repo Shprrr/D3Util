@@ -8,6 +8,8 @@ namespace D3Util
 {
 	public class ItemRoot
 	{
+		public const string ITEM_URL = "http://us.battle.net/api/d3/data/{0}";
+
 		public string id { get; set; }
 		public string name { get; set; }
 		public string icon { get; set; }
