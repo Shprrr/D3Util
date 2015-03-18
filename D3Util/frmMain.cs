@@ -85,17 +85,22 @@ namespace D3Util
 				return;
 			}
 
+			AddBattleTagConfig();
+
+			foreach (JsonHero hero in profile.heroes)
+			{
+				flpProfile.Controls.Add(CreateHero(hero));
+			}
+		}
+
+		private void AddBattleTagConfig()
+		{
 			BattleTag battleTag = new BattleTag(cboBattleTagName.Text, int.Parse(txtBattleTagCode.Text));
 			if (!config.BattleTags.Exists(bt => bt == battleTag))
 			{
 				config.BattleTags.Add(battleTag);
 				config.Save(CONFIG_FILENAME);
 				cboBattleTagName.Items.Add(battleTag);
-			}
-
-			foreach (JsonHero hero in profile.heroes)
-			{
-				flpProfile.Controls.Add(CreateHero(hero));
 			}
 		}
 
@@ -125,6 +130,8 @@ namespace D3Util
 					folderBrowserDialog.SelectedPath = Directory.GetCurrentDirectory();
 					if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
 						return;
+
+					AddBattleTagConfig();
 
 					// Set progress window
 					progressBar.Value = 0;
@@ -168,19 +175,19 @@ namespace D3Util
 
 					path += hero.id + "\\";
 					Directory.CreateDirectory(path);
-					SaveItemJson(path, heroTemp.items.head);
-					SaveItemJson(path, heroTemp.items.torso);
-					SaveItemJson(path, heroTemp.items.feet);
-					SaveItemJson(path, heroTemp.items.hands);
-					SaveItemJson(path, heroTemp.items.shoulders);
-					SaveItemJson(path, heroTemp.items.legs);
-					SaveItemJson(path, heroTemp.items.bracers);
-					SaveItemJson(path, heroTemp.items.mainHand);
-					SaveItemJson(path, heroTemp.items.offHand);
-					SaveItemJson(path, heroTemp.items.waist);
-					SaveItemJson(path, heroTemp.items.rightFinger);
-					SaveItemJson(path, heroTemp.items.leftFinger);
-					SaveItemJson(path, heroTemp.items.neck);
+					SaveItemJson(path, heroTemp.items.head, Hero.Slot.Head);
+					SaveItemJson(path, heroTemp.items.torso, Hero.Slot.Torso);
+					SaveItemJson(path, heroTemp.items.feet, Hero.Slot.Feet);
+					SaveItemJson(path, heroTemp.items.hands, Hero.Slot.Hands);
+					SaveItemJson(path, heroTemp.items.shoulders, Hero.Slot.Shoulders);
+					SaveItemJson(path, heroTemp.items.legs, Hero.Slot.Legs);
+					SaveItemJson(path, heroTemp.items.bracers, Hero.Slot.Bracers);
+					SaveItemJson(path, heroTemp.items.mainHand, Hero.Slot.MainHand);
+					SaveItemJson(path, heroTemp.items.offHand, Hero.Slot.OffHand);
+					SaveItemJson(path, heroTemp.items.waist, Hero.Slot.Waist);
+					SaveItemJson(path, heroTemp.items.rightFinger, Hero.Slot.RightFinger);
+					SaveItemJson(path, heroTemp.items.leftFinger, Hero.Slot.LeftFinger);
+					SaveItemJson(path, heroTemp.items.neck, Hero.Slot.Neck);
 				}
 
 				MessageBox.Show("Save completed.");
@@ -195,7 +202,7 @@ namespace D3Util
 			}
 		}
 
-		private void SaveItemJson(string path, JsonItem item)
+		private void SaveItemJson(string path, JsonItem item, Hero.Slot slot)
 		{
 			if (item == null)
 			{
@@ -205,7 +212,7 @@ namespace D3Util
 
 			using (Stream s = GetStream(string.Format(ItemRoot.ITEM_URL, item.tooltipParams)))
 			{
-				using (var file = File.Create(path + item.GetType().Name + ".json"))
+				using (var file = File.Create(path + slot + ".json"))
 				{
 					s.CopyTo(file);
 					Progress();
@@ -218,6 +225,30 @@ namespace D3Util
 			progressBar.Value++;
 			lblProgression.Text = progressBar.Value + "/" + progressBar.Maximum;
 			Update();
+		}
+
+		private void btnLoadProfile_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			using (Stream s = openFileDialog.OpenFile())
+			{
+				DataContractJsonSerializer profileSerializer = new DataContractJsonSerializer(typeof(Profile));
+				profile = (Profile)profileSerializer.ReadObject(s);
+			}
+
+			flpProfile.Controls.Clear();
+			if (profile.heroes == null)
+			{
+				profile = null;
+				return;
+			}
+
+			foreach (JsonHero hero in profile.heroes)
+			{
+				flpProfile.Controls.Add(CreateHero(new HeroRead(hero, openFileDialog.FileName)));
+			}
 		}
 
 		public static Stream GetStream(string url)

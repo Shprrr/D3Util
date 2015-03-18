@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Windows.Forms;
 
@@ -15,11 +16,9 @@ namespace D3Util
 		{
 			InitializeComponent();
 
-			DataContractJsonSerializer heroSerializer = new DataContractJsonSerializer(typeof(HeroRoot));
-			heroRoot = (HeroRoot)heroSerializer.ReadObject(
-				frmMain.GetStream(string.Format(HeroRoot.HERO_URL, battleTag.Replace('#', '-'), jsonHero.id)));
+			LoadHero(battleTag, jsonHero);
 
-			hero = new Hero(heroRoot);
+			hero = new Hero(heroRoot, jsonHero is HeroRead ? ((HeroRead)jsonHero).FilenameSource : null);
 
 			// Hide these label because it's not calculated.
 			label30.Visible = false;
@@ -30,6 +29,19 @@ namespace D3Util
 			lblHeroName.Text = heroRoot.name;
 			ShowHeroStats();
 			ShowItem();
+		}
+
+		private void LoadHero(string battleTag, JsonHero jsonHero)
+		{
+			DataContractJsonSerializer heroSerializer = new DataContractJsonSerializer(typeof(HeroRoot));
+			Stream s;
+			if (jsonHero is HeroRead)
+				s = File.OpenRead(((HeroRead)jsonHero).FilenameSource);
+			else
+				s = frmMain.GetStream(string.Format(HeroRoot.HERO_URL, battleTag.Replace('#', '-'), jsonHero.id));
+
+			heroRoot = (HeroRoot)heroSerializer.ReadObject(s);
+			s.Dispose();
 		}
 
 		private void btnBack_Click(object sender, EventArgs e)

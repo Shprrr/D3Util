@@ -78,6 +78,21 @@ namespace D3Util
 		}
 	}
 
+	public class HeroRead : JsonHero
+	{
+		public string FilenameSource { get; set; }
+
+		public HeroRead(JsonHero parent, string filenameProfile)
+		{
+			foreach (var property in parent.GetType().GetProperties())
+			{
+				property.SetValue(this, property.GetValue(parent, null), null);
+			}
+
+			FilenameSource = System.IO.Path.ChangeExtension(filenameProfile, null) + "\\" + id + ".json";
+		}
+	}
+
 	public class Artisan
 	{
 		public string slug { get; set; }

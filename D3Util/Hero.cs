@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 
@@ -85,9 +86,9 @@ namespace D3Util
 		private Dictionary<Slot, Item> _items = new Dictionary<Slot, Item>();
 		public Dictionary<Slot, Item> items { get { return _items; } }
 
-		public Hero(HeroRoot heroRoot)
+		public Hero(HeroRoot heroRoot, string filenameHero)
 		{
-			InitItems(heroRoot);
+			InitItems(heroRoot, filenameHero);
 
 			SetItemsValues();
 
@@ -222,35 +223,36 @@ namespace D3Util
 			}
 		}
 
-		protected void InitItems(HeroRoot heroRoot)
+		protected void InitItems(HeroRoot heroRoot, string filenameHero)
 		{
 			DataContractJsonSerializer itemSerializer = new DataContractJsonSerializer(typeof(ItemRoot));
-			if (heroRoot.items.head != null)
-				items.Add(Slot.Head, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.head.tooltipParams)))));
-			if (heroRoot.items.torso != null)
-				items.Add(Slot.Torso, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.torso.tooltipParams)))));
-			if (heroRoot.items.feet != null)
-				items.Add(Slot.Feet, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.feet.tooltipParams)))));
-			if (heroRoot.items.hands != null)
-				items.Add(Slot.Hands, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.hands.tooltipParams)))));
-			if (heroRoot.items.shoulders != null)
-				items.Add(Slot.Shoulders, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.shoulders.tooltipParams)))));
-			if (heroRoot.items.legs != null)
-				items.Add(Slot.Legs, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.legs.tooltipParams)))));
-			if (heroRoot.items.bracers != null)
-				items.Add(Slot.Bracers, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.bracers.tooltipParams)))));
-			if (heroRoot.items.mainHand != null)
-				items.Add(Slot.MainHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.mainHand.tooltipParams)))));
-			if (heroRoot.items.offHand != null)
-				items.Add(Slot.OffHand, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.offHand.tooltipParams)))));
-			if (heroRoot.items.waist != null)
-				items.Add(Slot.Waist, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.waist.tooltipParams)))));
-			if (heroRoot.items.leftFinger != null)
-				items.Add(Slot.LeftFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.leftFinger.tooltipParams)))));
-			if (heroRoot.items.rightFinger != null)
-				items.Add(Slot.RightFinger, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.rightFinger.tooltipParams)))));
-			if (heroRoot.items.neck != null)
-				items.Add(Slot.Neck, new Item((ItemRoot)itemSerializer.ReadObject(frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, heroRoot.items.neck.tooltipParams)))));
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.head, Slot.Head);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.torso, Slot.Torso);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.feet, Slot.Feet);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.hands, Slot.Hands);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.shoulders, Slot.Shoulders);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.legs, Slot.Legs);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.bracers, Slot.Bracers);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.mainHand, Slot.MainHand);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.offHand, Slot.OffHand);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.waist, Slot.Waist);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.leftFinger, Slot.LeftFinger);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.rightFinger, Slot.RightFinger);
+			LoadItem(itemSerializer, filenameHero, heroRoot.items.neck, Slot.Neck);
+		}
+
+		private void LoadItem(DataContractJsonSerializer itemSerializer, string filenameHero, JsonItem item, Slot slot)
+		{
+			if (item == null)
+				return;
+
+			Stream s;
+			if (string.IsNullOrEmpty(filenameHero))
+				s = frmMain.GetStream(string.Format(ItemRoot.ITEM_URL, item.tooltipParams));
+			else
+				s = File.OpenRead(Path.ChangeExtension(filenameHero, null) + "\\" + slot + ".json");
+			items.Add(slot, new Item((ItemRoot)itemSerializer.ReadObject(s)));
+			s.Dispose();
 		}
 
 		protected void SetItemsValues()

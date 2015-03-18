@@ -42,8 +42,9 @@
 			this.btnHero = new System.Windows.Forms.Button();
 			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.grbProgression = new System.Windows.Forms.GroupBox();
-			this.lblProgression = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.lblProgression = new System.Windows.Forms.Label();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.groupBox1.SuspendLayout();
 			this.flpProfile.SuspendLayout();
 			this.grbProgression.SuspendLayout();
@@ -75,7 +76,7 @@
 			this.btnLoadProfile.TabIndex = 6;
 			this.btnLoadProfile.Text = "&Load profile";
 			this.btnLoadProfile.UseVisualStyleBackColor = true;
-			this.btnLoadProfile.Visible = false;
+			this.btnLoadProfile.Click += new System.EventHandler(this.btnLoadProfile_Click);
 			// 
 			// btnSaveProfile
 			// 
@@ -176,6 +177,14 @@
 			this.grbProgression.UseWaitCursor = true;
 			this.grbProgression.Visible = false;
 			// 
+			// progressBar
+			// 
+			this.progressBar.Location = new System.Drawing.Point(6, 32);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(200, 23);
+			this.progressBar.TabIndex = 0;
+			this.progressBar.UseWaitCursor = true;
+			// 
 			// lblProgression
 			// 
 			this.lblProgression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -188,13 +197,9 @@
 			this.lblProgression.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			this.lblProgression.UseWaitCursor = true;
 			// 
-			// progressBar
+			// openFileDialog
 			// 
-			this.progressBar.Location = new System.Drawing.Point(6, 32);
-			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(200, 23);
-			this.progressBar.TabIndex = 0;
-			this.progressBar.UseWaitCursor = true;
+			this.openFileDialog.Filter = "JSON Profile|*.json|All files|*.*";
 			// 
 			// frmMain
 			// 
@@ -234,5 +239,6 @@
 		private System.Windows.Forms.GroupBox grbProgression;
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.Label lblProgression;
+		private System.Windows.Forms.OpenFileDialog openFileDialog;
 	}
 }
